@@ -1,0 +1,29 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit(recipeForm)" #recipeForm="ngForm">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" [(ngModel)]="recipe.title"
+               class="form-control"
+               id="title"
+               name="title"
+               placeholder="Enter title"
+               required #title="ngModel">
+      </div>
+      <div [hidden]="!title.pristine" class="alert alert-danger">Title is required</div>
+      <div class="form-group">
+        <label for="steps">Steps</label>
+        <textarea  [(ngModel)]="recipe.steps"
+               class="form-control"
+               id="steps"
+               name="steps"
+               placeholder="Enter steps"
+                   rows="5"
+                   required #steps="ngModel"></textarea>
+        <div [hidden]="!steps.pristine" class="alert alert-danger">Steps are required</div>
+      </div>
+      <button type="submit" [disabled]="!recipeForm.form.valid"
+              class="btn btn-info">Submit</button>
+        </form>
+  </div>
+</div>
