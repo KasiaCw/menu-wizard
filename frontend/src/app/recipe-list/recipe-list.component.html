@@ -1,0 +1,18 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Steps</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let recipe of recipe">
+        <td>{{ recipe.title }}</td>
+        <td>{{ recipe.steps }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
