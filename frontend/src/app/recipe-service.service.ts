@@ -21,4 +21,8 @@ export class RecipeServiceService {
   public save(recipe: Recipe) {
     return this.http.post<Recipe>(this.recipeUrl, recipe);
   }
+
+  public findAll():Observable<Recipe[]>{
+    return this.http.get<Recipe[]>(this.recipeUrl);
+  }
 }

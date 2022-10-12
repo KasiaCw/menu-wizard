@@ -1,9 +1,12 @@
 package pl.jcw.menuwizard.recipe;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,6 +19,7 @@ public class RecipeService {
   @Transactional
   public RecipeDto saveRecipe(RecipeDto recipeDto) {
     Recipe recipe = mapToEntity(recipeDto);
+    if (recipe.getRecipeCreatedDate() == null) recipe.setRecipeCreatedDate(LocalDateTime.now());
     Recipe newRecipe = recipeRepository.save(recipe);
     return mapToDto(newRecipe);
   }
@@ -25,6 +29,12 @@ public class RecipeService {
     return recipeRepository.findById(id).map(this::mapToDto);
   }
 
+  public List<RecipeDto> getAllRecipes() {
+    return recipeRepository.findAll(Sort.by("recipeCreatedDate").descending()).stream()
+        .map(this::mapToDto)
+        .toList();
+  }
+
   private Recipe mapToEntity(RecipeDto recipeDto) {
     Recipe recipe = new Recipe();
     if (recipeDto.getId() != null) {
@@ -32,6 +42,7 @@ public class RecipeService {
     }
     recipe.setTitle(recipeDto.getTitle());
     recipe.setSteps(recipeDto.getSteps());
+    recipe.setRecipeCreatedDate(recipeDto.getRecipeCreatedDate());
     return recipe;
   }
 
@@ -40,6 +51,7 @@ public class RecipeService {
         .id(recipe.getId())
         .title(recipe.getTitle())
         .steps(recipe.getSteps())
+        .recipeCreatedDate(recipe.getRecipeCreatedDate())
         .build();
   }
 }

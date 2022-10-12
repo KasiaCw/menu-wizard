@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {Recipe} from "../recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeServiceService} from "../recipe-service.service";
@@ -27,6 +27,6 @@ export class RecipeFormComponent {
   }
 
   private gotToRecipiesList() {
-    this.router.navigate(['/'])
+    this.router.navigate(['/recipies'])
   }
 }
