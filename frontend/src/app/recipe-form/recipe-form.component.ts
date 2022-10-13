@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Recipe} from "../recipe";
-import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeServiceService} from "../recipe-service.service";
-import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-recipe-form',
@@ -11,22 +9,24 @@ import {NgForm} from "@angular/forms";
 })
 export class RecipeFormComponent {
 
-  recipe: Recipe;
+  @Input()
+  recipe: Recipe = new Recipe();
+
+  @Output()
+  updatedRecipe = new EventEmitter<Recipe|undefined>();
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private recipeServiceService: RecipeServiceService) {
-    this.recipe = new Recipe();
   }
 
-
-  onSubmit(form: NgForm) {
-    console.log("Submit clicked " + form);
-    this.recipeServiceService.save(this.recipe).subscribe(result => this.gotToRecipiesList(result.id));
+  onSubmit() {
+    console.log("on submit triggered" + this.recipe.title)
+    this.recipeServiceService.save(this.recipe).subscribe(result => this.updatedRecipe.emit(result));
   }
 
-  private gotToRecipiesList(id: string) {
-    this.router.navigate(['/recipe/'+id])
+  cancel(){
+    console.log("cancelling")
+    this.updatedRecipe.emit(undefined);
   }
+
 }

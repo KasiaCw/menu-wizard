@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +31,14 @@ public class RecipeController {
   }
 
   @GetMapping()
-  public List<RecipeDto> getRecipies(){
-    return  recipeService.getAllRecipes();
+  public List<RecipeDto> getRecipies() {
+    return recipeService.getAllRecipes();
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<RecipeDto> editRecipe(
+      @RequestBody RecipeDto recipeDto, @PathVariable(name = "id") UUID id) {
+    RecipeDto postResponse = recipeService.editRecipe(recipeDto);
+    return new ResponseEntity<>(postResponse, HttpStatus.OK);
   }
 }

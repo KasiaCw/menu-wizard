@@ -1,24 +1,22 @@
-<div class="card my-5" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<div class="card my-5" xmlns="http://www.w3.org/1999/html">
   <div class="card-body">
-      <div class="form-group">
-        <div>
+    <div class="form-group">
+      <div>
         <h2>
-           {{recipe.title}}
+          {{recipe?.title}}
         </h2>
-        </div>
-        <div>
-          <strong>Ingredients:</strong>
-          <br>
-         {{recipe.ingredients}}
-        </div>
-        <div>
-          <strong>Steps:</strong>
-          <br>
-          {{recipe.steps}}
-        </div>
-
-      <button type="button" (click)="goBack()">go back</button>
-        <button type="button" (click)="goBack()">edit recipe</button>
+      </div>
+      <div>
+        <strong>Ingredients:</strong>
+        <br>
+        {{recipe?.ingredients}}
+      </div>
+      <div>
+        <strong>Steps:</strong>
+        <br>
+        {{recipe?.steps}}
+      </div>
+      <br>
+    </div>
   </div>
 </div>
-

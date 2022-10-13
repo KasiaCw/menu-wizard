@@ -1,6 +1,6 @@
 <div class="card my-5">
   <div class="card-body">
-    <form (ngSubmit)="onSubmit(recipeForm)" #recipeForm="ngForm">
+    <form (ngSubmit)="onSubmit()" #recipeForm="ngForm">
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" [(ngModel)]="recipe.title"
@@ -13,28 +13,32 @@
       <div [hidden]="!title.pristine" class="alert alert-danger">Title is required</div>
       <div class="form-group">
         <label for="ingredients">Ingredients</label>
-        <textarea  [(ngModel)]="recipe.ingredients"
-                   class="form-control"
-                   id="ingredients"
-                   name="ingredients"
-                   placeholder="Enter ingredients"
-                   rows="5"
-                   required #ingredients="ngModel"></textarea>
+        <textarea [(ngModel)]="recipe.ingredients"
+                  class="form-control"
+                  id="ingredients"
+                  name="ingredients"
+                  placeholder="Enter ingredients"
+                  rows="5"
+                  required #ingredients="ngModel"></textarea>
         <div [hidden]="!ingredients.pristine" class="alert alert-danger">Ingredients are required</div>
       </div>
       <div class="form-group">
         <label for="steps">Steps</label>
-        <textarea  [(ngModel)]="recipe.steps"
-               class="form-control"
-               id="steps"
-               name="steps"
-               placeholder="Enter steps"
-                   rows="5"
-                   required #steps="ngModel"></textarea>
+        <textarea [(ngModel)]="recipe.steps"
+                  class="form-control"
+                  id="steps"
+                  name="steps"
+                  placeholder="Enter steps"
+                  rows="5"
+                  required #steps="ngModel"></textarea>
         <div [hidden]="!steps.pristine" class="alert alert-danger">Steps are required</div>
       </div>
       <button type="submit" [disabled]="!recipeForm.form.valid"
-              class="btn btn-info">Submit</button>
-        </form>
+              class="btn btn-info">Submit
+      </button>
+      <button type="button" (click)="cancel()"
+              class="btn btn-info">Cancel
+      </button>
+    </form>
   </div>
 </div>
