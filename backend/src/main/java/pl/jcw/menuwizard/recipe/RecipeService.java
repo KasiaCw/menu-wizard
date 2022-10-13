@@ -35,12 +35,15 @@ public class RecipeService {
         .toList();
   }
 
+
+
   private Recipe mapToEntity(RecipeDto recipeDto) {
     Recipe recipe = new Recipe();
     if (recipeDto.getId() != null) {
       recipe.setId(recipeDto.getId());
     }
     recipe.setTitle(recipeDto.getTitle());
+    recipe.setIngredients(recipeDto.getIngredients());
     recipe.setSteps(recipeDto.getSteps());
     recipe.setRecipeCreatedDate(recipeDto.getRecipeCreatedDate());
     return recipe;
@@ -50,6 +53,7 @@ public class RecipeService {
     return RecipeDto.builder()
         .id(recipe.getId())
         .title(recipe.getTitle())
+            .ingredients(recipe.getIngredients())
         .steps(recipe.getSteps())
         .recipeCreatedDate(recipe.getRecipeCreatedDate())
         .build();

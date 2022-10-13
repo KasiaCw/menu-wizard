@@ -8,12 +8,14 @@ import {FormsModule} from "@angular/forms";
 import {RecipeServiceService} from "./recipe-service.service";
 import {HttpClientModule} from "@angular/common/http";
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeFormComponent,
-    RecipeListComponent
+    RecipeListComponent,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,

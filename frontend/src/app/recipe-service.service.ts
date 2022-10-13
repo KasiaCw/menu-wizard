@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Recipe} from "./recipe";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import {Observable} from "rxjs";
 export class RecipeServiceService {
 
   private recipeUrl:string
+
 
   constructor(private http: HttpClient) {
     this.recipeUrl = 'http://localhost:8080/api/recipies';
@@ -18,11 +20,15 @@ export class RecipeServiceService {
     return this.http.get<Recipe[]>(this.recipeUrl);
   }
 
-  public save(recipe: Recipe) {
+  public save(recipe: Recipe):Observable<Recipe> {
     return this.http.post<Recipe>(this.recipeUrl, recipe);
   }
 
   public findAll():Observable<Recipe[]>{
     return this.http.get<Recipe[]>(this.recipeUrl);
+  }
+
+  public getRecipe(id: string): Observable<Recipe>{
+    return this.http.get<Recipe>(this.recipeUrl+'/'+id);
   }
 }

@@ -22,6 +22,9 @@ public class Recipe {
   @Column(name = "title", nullable = false)
   private String title;
 
+  @Column(name = "ingredients", nullable = false)
+  private String ingredients;
+
   @Column(name = "steps", nullable = false)
   private String steps;
 

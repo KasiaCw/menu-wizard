@@ -23,10 +23,10 @@ export class RecipeFormComponent {
 
   onSubmit(form: NgForm) {
     console.log("Submit clicked " + form);
-    this.recipeServiceService.save(this.recipe).subscribe(result => this.gotToRecipiesList());
+    this.recipeServiceService.save(this.recipe).subscribe(result => this.gotToRecipiesList(result.id));
   }
 
-  private gotToRecipiesList() {
-    this.router.navigate(['/recipies'])
+  private gotToRecipiesList(id: string) {
+    this.router.navigate(['/recipe/'+id])
   }
 }
