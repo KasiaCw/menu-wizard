@@ -35,7 +35,18 @@ public class RecipeService {
         .toList();
   }
 
+  public RecipeDto editRecipe(RecipeDto recipeDto) {
+    Recipe recipe =
+        recipeRepository
+            .findById(recipeDto.getId())
+            .orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", recipeDto.getId()));
+    recipe.setTitle(recipeDto.getTitle());
+    recipe.setIngredients(recipeDto.getIngredients());
+    recipe.setSteps(recipeDto.getSteps());
 
+    Recipe editRecipe = recipeRepository.save(recipe);
+    return (mapToDto(editRecipe));
+  }
 
   private Recipe mapToEntity(RecipeDto recipeDto) {
     Recipe recipe = new Recipe();
@@ -53,7 +64,7 @@ public class RecipeService {
     return RecipeDto.builder()
         .id(recipe.getId())
         .title(recipe.getTitle())
-            .ingredients(recipe.getIngredients())
+        .ingredients(recipe.getIngredients())
         .steps(recipe.getSteps())
         .recipeCreatedDate(recipe.getRecipeCreatedDate())
         .build();

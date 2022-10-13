@@ -1,29 +1,36 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { RecipeFormComponent } from './recipe-form/recipe-form.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {RecipeFormComponent} from './recipe-form/recipe-form.component';
 import {FormsModule} from "@angular/forms";
 import {RecipeServiceService} from "./recipe-service.service";
 import {HttpClientModule} from "@angular/common/http";
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
-import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import {RecipeListComponent} from './recipe-list/recipe-list.component';
+import {RecipeDetailsComponent} from './recipe-details/recipe-details.component';
+import {RecipeManagerComponent} from './recipe-manager/recipe-manager.component';
+import {CommonModule} from "@angular/common";
+import {RecipeCreatorComponent} from './recipe-creator/recipe-creator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeFormComponent,
     RecipeListComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
+    RecipeManagerComponent,
+    RecipeCreatorComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule
   ],
   providers: [RecipeServiceService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

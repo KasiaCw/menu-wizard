@@ -20,7 +20,7 @@ class RecipeServiceTest {
   @Autowired RecipeRepository recipeRepository;
 
   @AfterEach
-  void cleanup(){
+  void cleanup() {
     recipeRepository.deleteAll();
   }
 
@@ -28,10 +28,7 @@ class RecipeServiceTest {
   void shouldSaveAndReadRecipe() {
     // given
     RecipeDto newRecipe =
-        RecipeDto.builder()
-            .title("New Recipe")
-            .steps("Steps")
-            .recipeCreatedDate(LocalDateTime.now())
+            recipeFixture()
             .build();
     // when
     RecipeDto savedRecipe = recipeService.saveRecipe(newRecipe);
@@ -40,14 +37,8 @@ class RecipeServiceTest {
 
     // then
     assertThat(savedRecipe.getId()).isNotNull();
-    assertThat(savedRecipe)
-        .usingRecursiveComparison()
-        .ignoringFields("id")
-        .isEqualTo(newRecipe);
-    assertThat(loadedRecipe)
-        .isPresent()
-        .get()
-        .isEqualTo(savedRecipe);
+    assertThat(savedRecipe).usingRecursiveComparison().ignoringFields("id").isEqualTo(newRecipe);
+    assertThat(loadedRecipe).isPresent().get().isEqualTo(savedRecipe);
   }
 
   @Test
@@ -85,7 +76,33 @@ class RecipeServiceTest {
   private RecipeDto.RecipeDtoBuilder recipeFixture() {
     return RecipeDto.builder()
         .title("test recipe")
+        .ingredients("Test ingredients")
         .steps("Test recipe steps")
         .recipeCreatedDate(LocalDateTime.now());
+  }
+
+  @Test
+  void shouldEditRecipe() {
+    // given
+    RecipeDto initialRecipe = (recipeService.saveRecipe(recipeFixture().build()));
+    RecipeDto recipeEdit =
+        recipeFixture()
+            .id(initialRecipe.getId())
+            .title("New Title")
+            .ingredients("New ingredients")
+            .steps("New steps")
+            .build();
+
+    // when
+    RecipeDto saved = recipeService.editRecipe(recipeEdit);
+    Optional<RecipeDto> recipeAfterEdit = recipeService.findRecipe(initialRecipe.getId());
+
+    // then
+    assertThat(recipeAfterEdit)
+        .get()
+        .usingRecursiveComparison()
+        .isNotEqualTo(initialRecipe)
+        .ignoringFields("recipeCreatedDate")
+        .isEqualTo(recipeEdit);
   }
 }

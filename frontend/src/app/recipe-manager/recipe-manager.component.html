@@ -1,0 +1,9 @@
+<div *ngIf="edit">
+  <app-recipe-form [recipe]="recipe" (updatedRecipe)="recipeUpdated($event)"></app-recipe-form>
+</div>
+
+<div *ngIf="!edit">
+  <app-recipe-details [recipe]="recipe"></app-recipe-details>
+  <button type="button" (click)="goBack()">go back</button>
+  <button type="button" (click)="enterEditMode()">edit recipe</button>
+</div>
