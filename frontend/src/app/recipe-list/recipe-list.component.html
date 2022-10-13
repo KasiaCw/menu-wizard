@@ -4,13 +4,15 @@
       <thead class="thead-dark">
       <tr>
         <th scope="col">Title</th>
-        <th scope="col">Steps</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let recipe of recipe">
-        <td>{{ recipe.title }}</td>
-        <td>{{ recipe.steps }}</td>
+        <td>
+          <a routerLink="/recipe/{{recipe.id}}">
+            <span class="badge">{{recipe.id}}</span> {{ recipe.title }}
+          </a>
+        </td>
       </tr>
       </tbody>
     </table>

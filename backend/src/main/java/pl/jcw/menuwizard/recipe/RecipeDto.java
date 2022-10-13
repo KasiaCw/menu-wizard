@@ -15,6 +15,7 @@ public class RecipeDto {
 
   UUID id;
   String title;
+  String ingredients;
   String steps;
   LocalDateTime recipeCreatedDate;
 }
