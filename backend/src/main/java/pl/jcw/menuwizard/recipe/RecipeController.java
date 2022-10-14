@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class RecipeController {
   @Autowired RecipeService recipeService;
 
   @PostMapping
+  @PreAuthorize("hasRole('USER')")
   public ResponseEntity<RecipeDto> saveRecipe(@RequestBody RecipeDto recipeDto) {
     return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipeDto));
   }
@@ -36,6 +38,7 @@ public class RecipeController {
   }
 
   @PutMapping("/{id}")
+  @PreAuthorize("hasRole('USER')")
   public ResponseEntity<RecipeDto> editRecipe(
       @RequestBody RecipeDto recipeDto, @PathVariable(name = "id") UUID id) {
     RecipeDto postResponse = recipeService.editRecipe(recipeDto);
