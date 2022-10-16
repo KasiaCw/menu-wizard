@@ -16,6 +16,7 @@ import {AuthComponent} from './auth/auth.component';
 import {SignUpComponent} from './auth/sign-up/sign-up.component';
 import {SignInComponent} from './auth/sign-in/sign-in.component';
 import {JwtInterceptor} from "./auth/jwt-interceptor";
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {JwtInterceptor} from "./auth/jwt-interceptor";
     AuthComponent,
     SignUpComponent,
     SignInComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,

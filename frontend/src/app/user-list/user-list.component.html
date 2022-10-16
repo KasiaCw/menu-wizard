@@ -3,15 +3,13 @@
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
       <tr>
-        <th scope="col">Title</th>
+        <th scope="col">Users</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let recipe of recipe">
+      <tr *ngFor="let user of users">
         <td>
-          <a routerLink="/recipe/{{recipe.id}}">
-            {{ recipe.title }}
-          </a>
+            <span class="badge">{{user.displayName}}</span> {{ user.username }}, {{user.email}}, {{ user.roles }}
         </td>
       </tr>
       </tbody>

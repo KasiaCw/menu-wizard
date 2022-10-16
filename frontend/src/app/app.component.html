@@ -17,8 +17,11 @@
             <li class="list-inline-item">
               <a routerLink="/recipies" class="btn btn-info">Recipies</a>
             </li>
-            <li class="list-inline-item">
+            <li *ngIf="showAddRecipe" class="list-inline-item">
               <a routerLink="/addrecipe" class="btn btn-info">Add recipe</a>
+            </li>
+            <li *ngIf="showUsersList" class="list-inline-item">
+              <a routerLink="/users" class="btn btn-info">Users list</a>
             </li>
             <li *ngIf="($userDetails|async) === null" class="list-inline-item">
               <a routerLink="/signup" class="btn btn-info">Sign up</a>
