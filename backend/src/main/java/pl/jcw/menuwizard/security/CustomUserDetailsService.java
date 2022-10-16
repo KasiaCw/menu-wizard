@@ -8,9 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.jcw.menuwizard.User.Role;
-import pl.jcw.menuwizard.User.User;
-import pl.jcw.menuwizard.User.UserRepository;
+import pl.jcw.menuwizard.user.Role;
+import pl.jcw.menuwizard.user.User;
+import pl.jcw.menuwizard.user.UserRepository;
 
 import java.util.Collection;
 import java.util.Set;

@@ -6,14 +6,16 @@ import {AppComponent} from './app.component';
 import {RecipeFormComponent} from './recipe-form/recipe-form.component';
 import {FormsModule} from "@angular/forms";
 import {RecipeServiceService} from "./recipe-service.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RecipeListComponent} from './recipe-list/recipe-list.component';
 import {RecipeDetailsComponent} from './recipe-details/recipe-details.component';
 import {RecipeManagerComponent} from './recipe-manager/recipe-manager.component';
 import {CommonModule} from "@angular/common";
 import {RecipeCreatorComponent} from './recipe-creator/recipe-creator.component';
-import { AuthComponent } from './auth/auth.component';
-import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import {AuthComponent} from './auth/auth.component';
+import {SignUpComponent} from './auth/sign-up/sign-up.component';
+import {SignInComponent} from './auth/sign-in/sign-in.component';
+import {JwtInterceptor} from "./auth/jwt-interceptor";
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     RecipeCreatorComponent,
     AuthComponent,
     SignUpComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,9 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     AppRoutingModule,
     CommonModule
   ],
-  providers: [RecipeServiceService],
+  providers: [  RecipeServiceService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
