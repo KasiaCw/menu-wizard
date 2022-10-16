@@ -12,6 +12,8 @@ import {RecipeDetailsComponent} from './recipe-details/recipe-details.component'
 import {RecipeManagerComponent} from './recipe-manager/recipe-manager.component';
 import {CommonModule} from "@angular/common";
 import {RecipeCreatorComponent} from './recipe-creator/recipe-creator.component';
+import { AuthComponent } from './auth/auth.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import {RecipeCreatorComponent} from './recipe-creator/recipe-creator.component'
     RecipeDetailsComponent,
     RecipeManagerComponent,
     RecipeCreatorComponent,
+    AuthComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

@@ -27,9 +27,7 @@ class RecipeServiceTest {
   @Test
   void shouldSaveAndReadRecipe() {
     // given
-    RecipeDto newRecipe =
-            recipeFixture()
-            .build();
+    RecipeDto newRecipe = recipeFixture().build();
     // when
     RecipeDto savedRecipe = recipeService.saveRecipe(newRecipe);
 
