@@ -4,72 +4,34 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pl.jcw.menuwizard.User.Role;
-import pl.jcw.menuwizard.User.User;
-import pl.jcw.menuwizard.User.UserRepository;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
-  @Autowired private AuthenticationManager authenticationManager;
 
-  @Autowired private UserRepository userRepository;
-
-  @Autowired private PasswordEncoder passwordEncoder;
-
-  @Autowired private JwtTokenProvider tokenProvider;
+  @Autowired private AuthService authService;
 
   @PostMapping("/signin")
   @Transactional
-  public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto) {
-    Authentication authentication =
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                loginDto.getUsername(), loginDto.getPassword()));
-
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-
-    String token = tokenProvider.generateToken(authentication);
-
-    return ResponseEntity.ok(JWTAuthResponse.builder().accessToken(token).build());
+  public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody SignInRequest loginDto) {
+    JWTAuthResponse jwtAuthResponse = authService.authenticateUser(loginDto);
+    return ResponseEntity.ok(jwtAuthResponse);
   }
 
   @PostMapping("/signup")
   @Transactional
-  public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto) {
-
-    if (userRepository.existsByUsername(signUpDto.getUsername())) {
-      return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+  public ResponseEntity<SignUpResponse> registerUser(@RequestBody SignUpRequest signUpRequest) {
+    try {
+      String name = authService.signup(signUpRequest);
+      return new ResponseEntity<>(
+          SignUpResponse.success("User " + name + " registered successfully"), HttpStatus.OK);
+    } catch (SignupException e) {
+      return new ResponseEntity<>(SignUpResponse.failure(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
-
-    if (userRepository.existsByEmail(signUpDto.getEmail())) {
-      return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
-    }
-
-    User user = new User();
-    user.setId(UUID.randomUUID());
-    user.setName(signUpDto.getName());
-    user.setUsername(signUpDto.getUsername());
-    user.setEmail(signUpDto.getEmail());
-    user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-    user.setRoles(Collections.singleton(Role.USER));
-
-    userRepository.save(user);
-
-    return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
   }
 }

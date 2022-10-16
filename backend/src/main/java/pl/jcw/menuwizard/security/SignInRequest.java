@@ -7,7 +7,7 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Jacksonized
 @Builder
-public class LoginDto {
+public class SignInRequest {
   String username;
   String password;
 }

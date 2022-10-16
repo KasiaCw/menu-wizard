@@ -18,29 +18,41 @@ class AuthControllerTest {
   @Test
   void shouldRegisterAndAuthenticate() {
     // give
-    SignUpDto signup =
-        SignUpDto.builder()
-            .email("test@gmail.com")
-            .name("Test user")
-            .username("test")
-            .password("testpw")
-            .build();
-    LoginDto login =
-        LoginDto.builder().username(signup.getUsername()).password(signup.getPassword()).build();
+    SignUpRequest signUpRequest = signUpRequest().build();
+    SignInRequest signInRequest = signInRequest().build();
 
     // when
-    ResponseEntity<?> responseEntity = authController.registerUser(signup);
+    ResponseEntity<?> responseEntity = authController.registerUser(signUpRequest);
 
     // then
     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     // when
-    ResponseEntity<JWTAuthResponse> jwtAuthResponseEntity = authController.authenticateUser(login);
+    ResponseEntity<JWTAuthResponse> jwtAuthResponseEntity =
+        authController.authenticateUser(signInRequest);
 
     // then
     assertThat(jwtAuthResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(jwtAuthResponseEntity.getBody().getTokenType()).isEqualTo("Bearer");
     assertThat(jwtAuthResponseEntity.getBody().getAccessToken()).isNotNull();
     // TODO implement assertion decoding JWT token and checking values
+  }
+
+  private SignInRequest.SignInRequestBuilder signInRequest() {
+    return signInRequest(signUpRequest());
+  }
+
+  private SignInRequest.SignInRequestBuilder signInRequest(
+      SignUpRequest.SignUpRequestBuilder signupBuilder) {
+    SignUpRequest signup = signupBuilder.build();
+    return SignInRequest.builder().username(signup.getUsername()).password(signup.getPassword());
+  }
+
+  private SignUpRequest.SignUpRequestBuilder signUpRequest() {
+    return SignUpRequest.builder()
+        .email("test@gmail.com")
+        .name("Test user")
+        .username("test")
+        .password("testpw");
   }
 }
