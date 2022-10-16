@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {UserDetails} from "./user-details";
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,5 +28,8 @@ export class UserServiceService {
 
   public getUserDetails():Observable<UserDetails|null>{
     return this.userDetails;
+  }
+  public findAll(): Observable<UserDetails[]> {
+    return this.http.get<UserDetails[]>(this.userUrl);
   }
 }

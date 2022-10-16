@@ -1,0 +1,18 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Users</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td>
+            <span class="badge">{{user.displayName}}</span> {{ user.username }}, {{user.email}}, {{ user.roles }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
