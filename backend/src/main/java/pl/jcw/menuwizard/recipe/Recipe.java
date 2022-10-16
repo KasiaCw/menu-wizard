@@ -21,10 +21,10 @@ public class Recipe {
   @Column(name = "title", nullable = false)
   private String title;
 
-  @Column(name = "ingredients", nullable = false)
+  @Column(name = "ingredients", nullable = false, columnDefinition = "text")
   private String ingredients;
 
-  @Column(name = "steps", nullable = false)
+  @Column(name = "steps", nullable = false, columnDefinition = "text")
   private String steps;
 
   @Column(name = "recipe_created_date", nullable = false, columnDefinition = "datetime(9)")

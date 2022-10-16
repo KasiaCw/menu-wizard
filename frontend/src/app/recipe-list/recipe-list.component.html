@@ -10,7 +10,7 @@
       <tr *ngFor="let recipe of recipe">
         <td>
           <a routerLink="/recipe/{{recipe.id}}">
-            <span class="badge">{{recipe.id}}</span> {{ recipe.title }}
+            {{ recipe.title }}
           </a>
         </td>
       </tr>
