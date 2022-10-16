@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/recipies")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = "http://localhost:4200")
 public class RecipeController {
 
   @Autowired RecipeService recipeService;

@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +26,21 @@ public class SecurityConfig {
   @Autowired private CustomUserDetailsService userDetailsService;
 
   @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry
+            .addMapping("/**")
+            .allowedHeaders("*")
+            .allowedOrigins("http://localhost:4200")
+            .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS")
+            .allowCredentials(true);
+      }
+    };
+  }
+
+  @Bean
   public SecurityFilterChain securityFilterChain(
       HttpSecurity http,
       AuthenticationEntryPoint authenticationEntryPoint,
@@ -31,7 +48,9 @@ public class SecurityConfig {
       throws Exception {
     //        http.authorizeRequests().antMatchers("/**").hasRole("USER").and().formLogin();
 
-    http.csrf()
+    http.cors()
+        .disable()
+        .csrf()
         .disable()
         .addFilterAfter(jwtFilter, AnonymousAuthenticationFilter.class)
         .exceptionHandling()
@@ -42,6 +61,8 @@ public class SecurityConfig {
         .and()
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/api/**")
+        .permitAll()
+        .antMatchers(HttpMethod.OPTIONS, "/api/**")
         .permitAll()
         .antMatchers("/api/auth/**")
         .permitAll()

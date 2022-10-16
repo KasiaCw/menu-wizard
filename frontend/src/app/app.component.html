@@ -20,6 +20,15 @@
             <li class="list-inline-item">
               <a routerLink="/addrecipe" class="btn btn-info">Add recipe</a>
             </li>
+            <li *ngIf="($userDetails|async) === null" class="list-inline-item">
+              <a routerLink="/signup" class="btn btn-info">Sign up</a>
+            </li>
+            <li *ngIf="($userDetails|async) === null" class="list-inline-item">
+              <a routerLink="/signin" class="btn btn-info">Sign in</a>
+            </li>
+            <li *ngIf="($userDetails|async) !== null" class="list-inline-item">
+              <a routerLink="" (click)="signout()" class="btn btn-info">Sign out {{($userDetails|async)?.displayName}}</a>
+            </li>
           </ul>
         </div>
       </div>

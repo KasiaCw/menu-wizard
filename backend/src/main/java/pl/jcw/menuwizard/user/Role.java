@@ -1,4 +1,4 @@
-package pl.jcw.menuwizard.User;
+package pl.jcw.menuwizard.user;
 
 public enum Role {
   ADMIN,
