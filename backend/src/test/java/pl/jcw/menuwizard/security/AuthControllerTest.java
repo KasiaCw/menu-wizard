@@ -34,7 +34,7 @@ class AuthControllerTest {
     // then
     assertThat(jwtAuthResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(jwtAuthResponseEntity.getBody().getTokenType()).isEqualTo("Bearer");
-    assertThat(jwtAuthResponseEntity.getBody().getAccessToken()).isNotNull();
+    assertThat(jwtAuthResponseEntity.getBody().getAccessToken()).isNull();
     // TODO implement assertion decoding JWT token and checking values
   }
 
